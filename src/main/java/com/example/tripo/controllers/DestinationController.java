@@ -10,26 +10,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping()
-@RestController("destinations")
+@RestController
+@RequestMapping("/destinations")
 public class DestinationController {
 
     @Autowired
-    private DestinationService destinationService;
+    public DestinationService destinationService;
 
-    @PostMapping("/")
-    private ResponseEntity<?> createDestination(@RequestBody Destination destination){
+    @PostMapping("")
+    public ResponseEntity<?> createDestination(@RequestBody Destination destination){
         destinationService.create(destination);
         return ResponseEntity.status(HttpStatus.CREATED).body(destination);
     }
 
-    @GetMapping("/")
-    private ResponseEntity<List<Destination>> listDestination() {
+    @GetMapping("")
+    public ResponseEntity<List<Destination>> listDestination() {
         return ResponseEntity.ok(destinationService.getList());
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<?> getOneDestination(@PathVariable String id){
+    public ResponseEntity<?> getOneDestination(@PathVariable String id){
         Optional<Destination> destination = destinationService.getOne(id);
 
         if(destination.isEmpty()){
@@ -40,7 +40,7 @@ public class DestinationController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateDestination(@PathVariable String id, @RequestBody Destination destination){
+    public ResponseEntity<?> updateDestination(@PathVariable String id, @RequestBody Destination destination){
         Optional<Destination> existentDestination = destinationService.getOne(id);
         if(existentDestination.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -50,7 +50,7 @@ public class DestinationController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<?> deleteDestination(@PathVariable String id){
+    public ResponseEntity<?> deleteDestination(@PathVariable String id){
         Optional<Destination> existantDestination = destinationService.getOne(id);
         if(existantDestination.isEmpty()){
             return ResponseEntity.notFound().build();
